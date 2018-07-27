@@ -376,6 +376,26 @@ body::-webkit-scroll {
     align-content: left;
 }
 
+.Pick-id-header > h1
+ text-align: center;
+    font-size: 50%;
+    margin: 0px;
+    height: auto;
+}
+#used-artifacts{
+text-align: left;
+    font-size: 50%;
+    margin: 0px;
+    height: auto;
+}
+#new-artifacts{
+text-align: right;
+    font-size: 50%;
+    margin: 0px;
+    height: auto;
+}
+
+
 #team_info h1 {
     font-size: 100px;
 }
@@ -393,5 +413,4 @@ body::-webkit-scroll {
     margin-left: 10%;
     flex-direction: column;
 }
-
 

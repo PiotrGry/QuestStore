@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quest Store </title>
+    <meta name="description" content="Quest Store System website."/>
+    <meta name="keywords" content="it students, CodeCool"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <script type="text/javascript" src="../js/javascript.js"></script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+
+    <!-- header -->
+    <object id="header" name="header" type="text/html" data="/static/header.html"></object>
+
+
+    <main>
+        <!-- menu -->
+        <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/mentor/menu.html"></object>
+        <div class ="main-inner-cointainer">
+            <div class="Pick-id-header">
+                <h1> Pick student who has useed an artifact </h1>
+            </div>
+            <form method="post" action="/mentor/show_student_artifacts">
+                <div class = "pick-list">
+
+                    {%for studentId,studentName in students%}
+                       Student: {{studentName}} Id: {{studentId}}<input type="radio" name="studentId" value={{studentId}}><br>
+                    {%endfor%}
+
+                    <input type="submit" value="Show">
+                </div>
+            </form>
+        </div>
+
+
+
+
+    </main>
+
+
+    <!-- footer -->
+    <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
+
+</div>
+
+</body>
+</html>

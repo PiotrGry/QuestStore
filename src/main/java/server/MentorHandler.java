@@ -75,6 +75,8 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/edit_artifact":
                         displayEditArtifactPage(httpExchange);
                         break;
+                    case "/mentor/display_student_to_pick":
+                        showStudentToPick(httpExchange);
                 }
             }
             if (method.equals("POST")) {
@@ -102,12 +104,45 @@ public class MentorHandler implements HttpHandler {
                     case "/mentor/edit_artifact":
                         editArtifact(httpExchange);
                         break;
+                    case "/mentor/display_student_to_pick":
+                        showStudentArtifact(httpExchange);
+                    case "/mentor/show_student_artifacts":
+                        showStudentArtifact(httpExchange);
                     case "/mentor/see_all_wallets":
                         handleStudentWalletInfo(httpExchange);
                         break;
                 }
             }
         }
+    }
+
+    private void showStudentArtifact(HttpExchange httpExchange) throws IOException {
+        Map<String,String> input = responseManager.getInput(httpExchange);
+        System.out.println(input.get("studentId"));
+        int studentId = Integer.parseInt(input.get("studentId"));
+        Map<String, List<String>> studentArtifacts = controller.getStudentArtifacts(studentId);
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/show_student_artifacts.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("newStudentArtifacts",studentArtifacts.get("newArtifacts"));
+        model.with("usedStudentArtifacts",studentArtifacts.get("usedArtifacts"));
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+    }
+
+    private void showStudentToPick(HttpExchange httpExchange) throws IOException {
+        Map<Integer, String> students = controller.getStudentsWithIds();
+        String response;
+        JtwigTemplate template =
+                JtwigTemplate.classpathTemplate(
+                        "static/mentor/display_student_to_pick.html");
+        JtwigModel model = JtwigModel.newModel();
+        model.with("students", students);
+        response = template.render(model);
+        responseManager.executeResponse(httpExchange, response);
+
     }
 
     private void editArtifact(HttpExchange httpExchange) throws IOException {
