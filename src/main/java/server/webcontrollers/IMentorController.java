@@ -1,5 +1,7 @@
 package server.webcontrollers;
 
+import system.model.Student;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,9 +21,12 @@ public interface IMentorController extends IServerController {
     Map<String, String> getAllWallets();
     List<String> getArtifacts();
     boolean editArtifact(Map<String, String> inputs);
+    Map<Integer, String> getStudentsWithIds();
     List<String> getStudentsByMentorId(int mentorId);
     boolean assignStudentToTeam(String studentData, String teamData);
+    Map<String, List<String>> getStudentArtifacts(int studentId);
     String getStudentWallet(int studentId);
     int getStudentIdFromTextData(String studentData);
     String[] getMentorData(int mentorId);
+
 }

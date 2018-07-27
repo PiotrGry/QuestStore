@@ -63,6 +63,14 @@ public class ResponseManager implements IResponseManager {
     }
 
     @Override
+    public void redirectToStudentArtifact(HttpExchange httpExchange) throws IOException {
+        Headers responseHeaders = httpExchange.getResponseHeaders();
+        responseHeaders.add("Location", "/mentor/show_student_artifacts");
+        httpExchange.sendResponseHeaders(302, -1);
+        httpExchange.close();
+    }
+
+    @Override
     public void redirectToLogin(HttpExchange httpExchange) throws IOException {
         Headers responseHeaders = httpExchange.getResponseHeaders();
         responseHeaders.add("Location", "/");

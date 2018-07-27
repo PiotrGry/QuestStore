@@ -4,7 +4,6 @@ import java.util.List;
 
 public interface IStudentController extends IServerController {
 
-
     String getStudentName(int studentId);
     String getStudentEmail(int studentId);
     String getStudentWallet(int studentId);

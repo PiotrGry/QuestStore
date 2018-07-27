@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html lang=en-us>
+<head>
+    <meta charset="utf-8"/>
+    <title>Quest Store </title>
+    <meta name="description" content="Quest Store System website."/>
+    <meta name="keywords" content="it students, CodeCool"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css"/>
+    <script type="text/javascript" src="../js/javascript.js"></script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+
+    <!-- header -->
+    <object id="header" name="header" type="text/html" data="/static/header.html"></object>
+    <main>
+        <!-- menu -->
+        <object id="main-menu-box" name="main-menu-box" type="text/html" data="/static/mentor/menu.html"></object>
+
+        <!-- content -->
+        <div id="main-content">
+            <h1>Mark used artifact</h1>
+            <form method="POST">
+                <div class="nested-container">
+
+                    <div class="pick-list">
+                        <ol>
+                            <h3>New Artifacts</h3>
+                            {%for new in newStudentArtifacts%}
+                            <li>
+                                <input type="radio" id="newArtifact" name="newArtifact" value={{new}} required>
+                                <label for="newArtifact">{{new}}</label>
+                            </li>
+                            {%endfor%}
+                        </ol>
+                    </div>
+                </div>
+                <div class="nested-container">
+                    <div class="pick-list">
+                        <ol>
+                            <h3>Used Artifact</h3>
+                            {%for used in usedStudentArtifacts%}
+                            <li>
+                               {{used}}
+                            </li>
+                            {%endfor%}
+                        </ol>
+                    </div>
+                </div>
+                <div class="nested-container-submit">
+                    <input type="submit" value="perform" required>
+                </div>
+            </form>
+        </div>
+        <!-- content -end-->
+    </main>
+    <!-- footer -->
+    <object id="footer" name="footer" type="text/html" data="/static/footer.html"></object>
+</div>
+</body>
+</html>
