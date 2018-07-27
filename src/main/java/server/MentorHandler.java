@@ -283,14 +283,16 @@ public class MentorHandler implements HttpHandler {
 
     private void displayMentorHomePage(HttpExchange httpExchange) throws IOException {
         String response;
+        int MAIN_INFO_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        String[] adminData = controller.getMentorData(sessionManager
+                .getCurrentUserId(httpExchange));
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/mentor/profile.html");
         JtwigModel model = JtwigModel.newModel();
-        int mentorId = this.sessionManager.getCurrentUserId(httpExchange);
-        model.with("name", controller.getMentorName(mentorId));
-        model.with("email", controller.getMentorEmail(mentorId));
-        model.with("class", controller.getMentorClassWithStudents(mentorId));
+        model.with("mainInfo", adminData[MAIN_INFO_INDEX]);
+        model.with("details", adminData[DETAILS_INDEX]);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }

@@ -268,6 +268,25 @@ public class WebMentorController implements IMentorController {
     }
 
     @Override
+    public String[] getMentorData(int mentorId) {
+        String[] mentorData = new String[]{"",""};
+        Mentor mentor = daoMentor.importMentor(mentorId);
+        if(mentorId == 0) {
+            return mentorData;
+        }
+        int BASIC_DATA_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        mentorData[BASIC_DATA_INDEX] = mentor.getName();
+
+        mentorData[DETAILS_INDEX] = String.format("id:%s<br>email:%s<br>students:<br>%s", mentorId,
+                mentor.getEmail(),
+                daoClass.getStudentsOfClass(daoMentor.getMentorClassId(mentor))
+                        .stream().map(Student::toString)
+                        .collect(Collectors.joining("<br>")));
+        return mentorData;
+    }
+
+    @Override
     public int getStudentIdFromTextData(String studentData) {
         return gatherIdFromStringData(studentData);
     }

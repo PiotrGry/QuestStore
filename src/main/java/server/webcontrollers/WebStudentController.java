@@ -1,10 +1,7 @@
 package server.webcontrollers;
 
 import system.dao.*;
-import system.model.Artifact;
-import system.model.CodecoolClass;
-import system.model.Student;
-import system.model.Team;
+import system.model.*;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -131,6 +128,34 @@ public class WebStudentController implements IStudentController {
         } else {
             return "Not this time.. :(";
         }
+    }
+
+    @Override
+    public String[] getStudentData(int studentId) {
+        String[] studentData = new String[]{"",""};
+        if(studentId == 0) {
+            return studentData;
+        }
+        int BASIC_DATA_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        Student student = daoStudent.importStudent(studentId);
+
+        studentData[BASIC_DATA_INDEX] = student.getName();
+
+        studentData[DETAILS_INDEX] = String.format("id: %s<br>email: %s<br>" +
+                        "level: %s<br>wealth: %s<br>" +
+                        "class: %s<br>team: %s<br>"  +
+                        "teammates:<br>%s",
+                studentId,
+                student.getEmail(),
+                getStudentExpLevel(studentId),
+                getMoney(studentId),
+                getStudentClass(studentId),
+                getStudentGroup(studentId),
+                daoTeam.getStudentsOfTeam(daoTeam.getTeamByStudentId(studentId).getGroupId())
+                        .stream().map(Student::toString)
+                        .collect(Collectors.joining("<br>")));
+        return studentData;
     }
 
     @Override

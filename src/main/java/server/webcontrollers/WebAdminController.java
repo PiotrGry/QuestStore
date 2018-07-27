@@ -173,6 +173,26 @@ public class WebAdminController implements IAdminController {
         }
     }
 
+    @Override
+    public String[] getAdminData(int adminId) {
+        String[] adminData = new String[]{"",""};
+        if(adminId == 0) {
+            return adminData;
+        }
+        int BASIC_DATA_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        Admin admin = daoAdmin.importAdmin(adminId);
+
+        adminData[BASIC_DATA_INDEX] = admin.getName();
+
+        adminData[DETAILS_INDEX] = String.format("id:%s<br>email:%s<br>mentors:<br>%s", adminId,
+                admin.getEmail(),
+                daoMentor.getAllMentors()
+                .stream().map(Mentor::toString)
+                .collect(Collectors.joining("<br>")));
+        return adminData;
+    }
+
     private int gatherIdFromStringData(String data) throws NumberFormatException, IndexOutOfBoundsException {
             int idIndex = 0;
             return Integer.parseInt(data.replace("#", "").split(" ")[idIndex]);

@@ -27,5 +27,6 @@ public interface IMentorController extends IServerController {
     Map<String, List<String>> getStudentArtifacts(int studentId);
     String getStudentWallet(int studentId);
     int getStudentIdFromTextData(String studentData);
+    String[] getMentorData(int mentorId);
 
 }

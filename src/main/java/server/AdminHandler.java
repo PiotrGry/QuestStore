@@ -255,14 +255,16 @@ public class AdminHandler implements HttpHandler {
 
     private void displayAdminHomePage(HttpExchange httpExchange) throws IOException {
         String response;
-
+        int MAIN_INFO_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        String[] adminData = controller.getAdminData(sessionManager
+                .getCurrentUserId(httpExchange));
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/admin/profile.html");
         JtwigModel model = JtwigModel.newModel();
-        int adminId = sessionManager.getCurrentUserId(httpExchange);
-        model.with("name", controller.getAdminName(adminId));
-        model.with("email", controller.getAdminEmail(adminId));
+        model.with("mainInfo", adminData[MAIN_INFO_INDEX]);
+        model.with("details", adminData[DETAILS_INDEX]);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }

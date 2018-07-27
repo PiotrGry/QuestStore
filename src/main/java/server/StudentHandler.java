@@ -76,18 +76,16 @@ public class StudentHandler implements HttpHandler {
 
     private void displayStudentHomePage(HttpExchange httpExchange) throws IOException {
         String response;
+        int MAIN_INFO_INDEX = 0;
+        int DETAILS_INDEX = 1;
+        String[] studentData = controller.getStudentData(sessionManager
+                .getCurrentUserId(httpExchange));
         JtwigTemplate template =
                 JtwigTemplate.classpathTemplate(
                         "static/student/profile.html");
-
         JtwigModel model = JtwigModel.newModel();
-        int studentId = this.sessionManager.getCurrentUserId(httpExchange);
-        model.with("name", controller.getStudentName(studentId));
-        model.with("email", controller.getStudentEmail(studentId));
-        model.with("money", controller.getStudentWallet(studentId));
-        model.with("level", controller.getStudentExpLevel(studentId));
-        model.with("group", controller.getStudentGroup(studentId));
-        model.with("class", controller.getStudentClass(studentId));
+        model.with("mainInfo", studentData[MAIN_INFO_INDEX]);
+        model.with("details", studentData[DETAILS_INDEX]);
         response = template.render(model);
         responseManager.executeResponse(httpExchange, response);
     }

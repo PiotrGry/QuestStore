@@ -190,11 +190,15 @@ public class DaoTeam extends SqlDao implements IDaoTeam {
             return false;
         }
 
-        String query = "INSERT INTO students_in_teams (id_team, id_student) VALUES (?, ?);";
+        String query = "INSERT INTO students_in_teams (id_team, id_student, id_student_in_team) " +
+                "VALUES (?, ?, ?);";
 
         try ( PreparedStatement preparedStatement = getConnection().prepareStatement(query) ) {
+            int idStudentInTeams = getLowestFreeIdFromGivenTable("students_in_teams",
+                    "id_student_in_team");
             preparedStatement.setInt(1, teamId);
             preparedStatement.setInt(2, studentId);
+            preparedStatement.setInt(3, idStudentInTeams);
             preparedStatement.executeUpdate();
             return true;
          } catch (SQLException e) {
